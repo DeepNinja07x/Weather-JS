@@ -10,7 +10,7 @@ It's a simple API based weather web application made using HTML5, CSS3, and Java
 # Program Screenshot
 
 <br>
-<p align="center"><img src="https://github.com/DeepNinja07x/To-Do-App/blob/master/To%20Do%20App/img/to-do-app-screenshot.png" align="center" alt="screenshot"></p>
+<p align="center"><img src="https://github.com/DeepNinja07x/Weather-JS/blob/main/project_screenshot.PNG" align="center" alt="screenshot"></p>
 
 ---
 # How to Contribute:
