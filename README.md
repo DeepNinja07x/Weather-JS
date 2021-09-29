@@ -6,6 +6,7 @@ It's a simple API based weather web application made using HTML5, CSS3, and Java
  - Wind Speed (Km/h)
 
 If your PR gets merged for **Hacktoberfest-21**, your PR will get "**hacktoberfest-accepeted**" label on it.
+
 ---
 
 # Program Screenshot
