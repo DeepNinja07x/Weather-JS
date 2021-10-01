@@ -70,7 +70,8 @@ body {
   
   .description {
     text-transform: capitalize;
-    margin-left: 8px;
+    /**This margin is needless as the icon has inbuilt margins.**/
+    /**margin-left: 8px;**/
   }
   
   .weather.loading {
