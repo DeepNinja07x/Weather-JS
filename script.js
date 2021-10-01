@@ -9,8 +9,8 @@ let weather = {
       )
         .then((response) => {
           if (!response.ok) {
-            alert("No weather found.");
-            throw new Error("No weather found.");
+            alert("Location not found.");
+            throw new Error("Location not found.");
           }
           return response.json();
         })
@@ -25,7 +25,7 @@ let weather = {
       document.querySelector(".icon").src =
         "https://openweathermap.org/img/wn/" + icon + ".png";
       document.querySelector(".description").innerText = description;
-      document.querySelector(".temp").innerText = temp + "°C";
+      document.querySelector(".temp").innerText = Math.round(temp * 10) / 10 + "°C" + " / " + Math.round((temp*(9/5) + 32) * 10) / 10 + "°F";
       document.querySelector(".humidity").innerText =
         "Humidity: " + humidity + "%";
       document.querySelector(".wind").innerText =
