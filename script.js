@@ -15,27 +15,30 @@ let weather = {
 
 //get current geolocation weather data
     currentLoc: function () {
-        navigator.geolocation.getCurrentPosition(function(position){
+        navigator.geolocation.getCurrentPosition(position => {
             let lat = position.coords.latitude;
             let lon = position.coords.longitude;
             console.log(lat, lon)
-        fetch(
-            "https://api.openweathermap.org/data/2.5/weather?lat=" +
-            lat + "&lon=" + lon +
-            "&units=metric&appid=" +
-            weather.apiKey
-        )
-            .then((response) => {
-                if (!response.ok) {
-                    weather.cityField.innerText = `Sorry, the weather in ${lat} ${lon} was not found, try again.`;
-                    weather.changeVisibilty([weather.iconField, weather.descriptionField, 
-                        weather.tempField, weather.humidityField, weather.windField], "hidden");
-                    throw new Error("No weather found.");
-                }
-                return response.json();
-            })
-            .then((data) => weather.displayWeather(data));
-        })
+            fetch(
+                "https://api.openweathermap.org/data/2.5/weather?lat=" +
+                lat + "&lon=" + lon +
+                "&units=metric&appid=" +
+                weather.apiKey
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        weather.cityField.innerText = `Sorry, the weather in ${lat} ${lon} was not found, try again.`;
+                        weather.changeVisibilty([weather.iconField, weather.descriptionField, 
+                            weather.tempField, weather.humidityField, weather.windField], "hidden");
+                        throw new Error("No weather found.");
+                    }
+                    return response.json();
+                })
+                .then((data) => weather.displayWeather(data)); 
+        }, error => {
+            console.error(error)
+            weather.fetchWeather("Kolkata")
+        })  
     },
 
 
