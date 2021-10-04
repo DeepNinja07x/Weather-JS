@@ -13,6 +13,7 @@ let weather = {
     },
 
 
+
 //get current geolocation weather data
     currentLoc: function () {
         navigator.geolocation.getCurrentPosition(position => {
@@ -41,6 +42,11 @@ let weather = {
         })  
     },
 
+
+
+    toFarenheit: function (temp) {
+        return Number(temp) * 1.8 + 32;
+    },
 
     fetchWeather: function (city) {
         fetch(
@@ -72,7 +78,7 @@ let weather = {
         this.cityField.innerText = `Weather in ${name}`;
         this.iconField.src = `https://openweathermap.org/img/wn/${icon}.png`;
         this.descriptionField.innerText = description;
-        this.tempField.innerText = ` ${temp} °C `;
+        this.tempField.innerText = ` ${temp} °C / ${this.toFarenheit(temp)} °F`;
         this.humidityField.innerText = `Humidity: ${humidity} %`;
         this.windField.innerText = `Wind speed: ${speed} km/h`;
 
