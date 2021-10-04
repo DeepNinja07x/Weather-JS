@@ -11,9 +11,43 @@ let weather = {
             field.style.visibility = value;
         }
     },
+
+
+
+//get current geolocation weather data
+    currentLoc: function () {
+        navigator.geolocation.getCurrentPosition(position => {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            console.log(lat, lon)
+            fetch(
+                "https://api.openweathermap.org/data/2.5/weather?lat=" +
+                lat + "&lon=" + lon +
+                "&units=metric&appid=" +
+                weather.apiKey
+            )
+                .then((response) => {
+                    if (!response.ok) {
+                        weather.cityField.innerText = `Sorry, the weather in ${lat} ${lon} was not found, try again.`;
+                        weather.changeVisibilty([weather.iconField, weather.descriptionField, 
+                            weather.tempField, weather.humidityField, weather.windField], "hidden");
+                        throw new Error("No weather found.");
+                    }
+                    return response.json();
+                })
+                .then((data) => weather.displayWeather(data)); 
+        }, error => {
+            console.error(error)
+            weather.fetchWeather("Kolkata")
+        })  
+    },
+
+
+
     toFarenheit: function (temp) {
         return Number(temp) * 1.8 + 32;
     },
+
     fetchWeather: function (city) {
         fetch(
             "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -49,7 +83,6 @@ let weather = {
         this.windField.innerText = `Wind speed: ${speed} km/h`;
 
         document.querySelector(".weather").classList.remove("loading");
-
         document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?" + name + "')";
     },
     search: function () {
@@ -69,4 +102,4 @@ document
         }
     });
 
-weather.fetchWeather("Kolkata");
+weather.currentLoc()
