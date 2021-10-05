@@ -10,6 +10,7 @@ body {
     background-size: cover;
     background-position: center; 
     font-size: 120%;
+    background: url('assets/images/weather-background.png');
   }
   
   .card {
