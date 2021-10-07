@@ -5,8 +5,8 @@ let weather = {
   tempField: document.querySelector(".temp"),
   humidityField: document.querySelector(".humidity"),
   windField: document.querySelector(".wind"),
-  apiKey: "5e1ddb8233f281231d95bf6718bddbb8",
-  googleApiKey: "", // Add your google api key
+  apiKey: config.apiKey,
+  googleApiKey: config.googleApiKey, 
   changeVisibilty: function (fields, value) {
     for (let field of fields) {
       field.style.visibility = value;
