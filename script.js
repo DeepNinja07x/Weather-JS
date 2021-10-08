@@ -5,8 +5,8 @@ let weather = {
   tempField: document.querySelector(".temp"),
   humidityField: document.querySelector(".humidity"),
   windField: document.querySelector(".wind"),
-  apiKey: config.apiKey,
-  googleApiKey: config.googleApiKey, 
+  apiKey: keyConfig.apiKey,
+  googleApiKey: keyConfig.googleApiKey, 
   changeVisibilty: function (fields, value) {
     for (let field of fields) {
       field.style.visibility = value;
@@ -21,10 +21,7 @@ let weather = {
       let lat = position.coords.latitude;
       let lon = position.coords.longitude;
       fetch(
-        "https://api.openweathermap.org/data/2.5/weather?lat=" +
-        lat + "&lon=" + lon +
-        "&units=metric&appid=" +
-        weather.apiKey
+        `${urlConfig.openWeatherMapDataUrl}?lat=${lat}&lon=${lon}&units=metric&appid=${weather.apiKey}`
       )
         .then((response) => {
           if (!response.ok) {
@@ -52,10 +49,7 @@ let weather = {
 
   fetchWeather: function (city) {
     fetch(
-      "https://api.openweathermap.org/data/2.5/weather?q=" +
-      city +
-      "&units=metric&appid=" +
-      this.apiKey
+      `${urlConfig.openWeatherMapDataUrl}?q=${city}&units=metric&appid=${this.apiKey}`
     )
       .then((response) => {
         if (!response.ok) {
@@ -74,7 +68,7 @@ let weather = {
 
   queryPhotoReference: function (data) {
     fetch(
-      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${data.name}&key=${weather.googleApiKey}&inputtype=textquery&locationbias=point:${data.coord.lat},${data.coord.lon}&fields=name,photo`
+      `${urlConfig.googleApiUrl}/findplacefromtext/json?input=${data.name}&key=${weather.googleApiKey}&inputtype=textquery&locationbias=point:${data.coord.lat},${data.coord.lon}&fields=name,photo`
     )
       .then((response) => {
         if (!response.ok) {
@@ -87,7 +81,7 @@ let weather = {
         const photoReference = data?.candidates[0]
         if (photoReference.photos) {
           fetch(
-            `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photoReference.photos[0].photo_reference}&key=${weather.googleApiKey}&maxheight=1600`
+            `${urlConfig.googleApiUrl}/photo?photoreference=${photoReference.photos[0].photo_reference}&key=${weather.googleApiKey}&maxheight=1600`
           )
             .then((response) => {
               if (!response.ok) {
@@ -99,7 +93,7 @@ let weather = {
               return document.body.style.backgroundImage = `url(${res.url})`;
             })
         } else {
-          return document.body.style.backgroundImage = `url(https://source.unsplash.com/1600x900/?cities)`;
+          return document.body.style.backgroundImage = `url(${urlConfig.defaultBackgroundUrl})`;
 
         }
       })
@@ -117,7 +111,7 @@ let weather = {
     this.tempField, this.humidityField, this.windField], "visible");
 
     this.cityField.innerText = `Weather in ${name}`;
-    this.iconField.src = `https://openweathermap.org/img/wn/${icon}.png`;
+    this.iconField.src = `${urlConfig.openWeatherMapImageUrl}/wn/${icon}.png`;
     // const photo = await this.queryPhotoReference(data)
     this.descriptionField.innerText = description;
     this.tempField.innerText = ` ${temp} °C / ${this.toFarenheit(temp)} °F`;
